@@ -506,11 +506,11 @@ def init_game():
                Paddle((table_size[0]-20, table_size[1]/2), paddle_size, paddle_speed, max_angle, 0, timeout)]
     ball = Ball(table_size, ball_size, paddle_bounce, wall_bounce, dust_error, init_speed_mag)
 
-    import chaser_ai
+    import prototype_ai #chaser_ai
 
     # move_getter are additional instance attributes added, these simply represent
     # the AI functions providing input through "up" or "down"
-    paddles[0].move_getter = chaser_ai.chaser
+    paddles[0].move_getter = prototype_ai.chaser   #chaser_ai.chaser
     paddles[1].move_getter = directions_from_input
     
     game_loop(screen, paddles, ball, table_size, clock_rate, turn_wait_rate, score_to_win, 1)
