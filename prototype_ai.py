@@ -1,7 +1,3 @@
-import math
-import time
-
-
 def reflect(a ,b):
   if a < 0:
     a = -a
@@ -13,7 +9,9 @@ def reflect(a ,b):
     return b - rem
 
 
+
 set_up = False
+
 def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
     global set_up
     if not set_up:
@@ -24,37 +22,12 @@ def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
 
     if vel[0] == 0:
       return 'nothing'
-    theta = math.atan2(vel[1], vel[0]) * 180 / math.pi
-
 
     if chaser.ai.ball_towards:
       intercept = (ball_frect.pos[1] + vel[1] * ((paddle_frect.pos[0] - ball_frect.pos[0]) / vel[0]))
-      print(intercept)
-
-      if 0 <= theta <= 90:
-        # br
-        print 'ball y height', ball_frect.pos[1]
-        print 'distance to table end', table_size[0] - ball_frect.pos[0]
-        prediction = reflect(intercept, table_size[1])  
-      elif 90 <= theta <= 180:
-        # bl
-        print 'ball y height', ball_frect.pos[1] 
-        print 'distance to side', ball_frect.pos[0]
-        prediction = reflect(intercept, table_size[1])
-      elif -90 <= theta <= 0:
-        # tr
-        print 'ball y height', table_size[1] - ball_frect.pos[1]
-        print 'distance to side', table_size[0] - ball_frect.pos[0]
-        prediction = reflect(intercept, table_size[1])
-      elif -180 <= theta <= -90:
-        # tl
-        print 'ball y height', table_size[1] - ball_frect.pos[1]
-        print 'distance to side', ball_frect.pos[0]
-        prediction = reflect(intercept, table_size[1])
+      prediction = reflect(intercept, table_size[1])  
     else:
         prediction = table_size[1] / 2
-
-    print'prediction', prediction
 
     chaser.ai.update_state(paddle_frect, ball_frect)
 
@@ -67,8 +40,6 @@ def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
 
 
 class PongAI:
-  ''' Represents a pong player's mind'''
-  
   def __init__(self, paddle, table_size,):
     self.ball_old_pos = (table_size[0] / 2, table_size[1] / 2)
     self.ball_old_vel = (0,0)

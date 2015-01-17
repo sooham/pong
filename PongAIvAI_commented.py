@@ -127,7 +127,7 @@ class Paddle:
         # the direction variable takes in the result from the chaser_ai.chaser function.
         # can be "up" or "down"
 
-        #direction = self.move_getter(self.frect.copy(), enemy_frect.copy(), ball_frect.copy(), tuple(table_size))
+        direction = self.move_getter(self.frect.copy(), enemy_frect.copy(), ball_frect.copy(), tuple(table_size))
 
         '''
         UNCOMMENT TO GET INPUTS FROM OUR AI
@@ -135,7 +135,7 @@ class Paddle:
         returns None if no movement found.
         '''
 
-        direction = self.move_getter(self.frect.copy(), enemy_frect.copy(), ball_frect.copy(), tuple(table_size))# timeout(self.move_getter, (self.frect.copy(), enemy_frect.copy(), ball_frect.copy(), tuple(table_size)), {}, self.timeout)
+        #direction = timeout(self.move_getter, (self.frect.copy(), enemy_frect.copy(), ball_frect.copy(), tuple(table_size)), {}, self.timeout)
         if direction == None:
             print('too slow')
 
@@ -513,7 +513,7 @@ def init_game():
 
     # move_getter are additional instance attributes added, these simply represent
     # the AI functions providing input through "up" or "down"
-    paddles[0].move_getter = chaser_ai.chaser
+    paddles[0].move_getter = directions_from_input
     paddles[1].move_getter = prototype_ai.chaser 
     
     game_loop(screen, paddles, ball, table_size, clock_rate, turn_wait_rate, score_to_win, 1)
