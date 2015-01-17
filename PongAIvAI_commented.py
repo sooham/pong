@@ -136,8 +136,8 @@ class Paddle:
         '''
 
         #direction = timeout(self.move_getter, (self.frect.copy(), enemy_frect.copy(), ball_frect.copy(), tuple(table_size)), {}, self.timeout)
-        if direction == None:
-            print('too slow')
+        # if direction == None:
+        #     print('time exceeded')
 
         if direction == "up":
             # decrease paddle's y coordinate positon.

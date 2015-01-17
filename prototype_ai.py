@@ -1,3 +1,4 @@
+
 def reflect(a ,b):
   if a < 0:
     a = -a
