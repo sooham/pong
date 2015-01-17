@@ -33,11 +33,12 @@ def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
     chaser.ai.update_state(paddle_frect, ball_frect)
 
     if prediction < chaser.ai.TABLE_CENTER:
-        paddle_hit_point = paddle_frect.pos[1]
+        paddle_hit_point = paddle_frect.pos[1] + 1 * paddle_frect.size[1] / 8
     elif prediction > chaser.ai.TABLE_CENTER:
-        paddle_hit_point = paddle_frect.pos[1] + paddle_frect.size[1]
+        paddle_hit_point = (paddle_frect.pos[1] + 7 * paddle_frect.size[1] / 8) 
     else:
         paddle_hit_point = paddle_frect.pos[1] + paddle_frect.size[1] / 2
+    print(paddle_hit_point - prediction)
     
 
     if paddle_hit_point < prediction:
