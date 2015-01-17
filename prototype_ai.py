@@ -28,13 +28,21 @@ def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
       intercept = (ball_frect.pos[1] + vel[1] * ((paddle_frect.pos[0] - ball_frect.pos[0]) / vel[0]))
       prediction = reflect(intercept, table_size[1])  
     else:
-        prediction = table_size[1] / 2
+        prediction = chaser.ai.TABLE_CENTER
 
     chaser.ai.update_state(paddle_frect, ball_frect)
 
-    if (paddle_frect.pos[1] + paddle_frect.size[1] / 2) < prediction:
+    if prediction < chaser.ai.TABLE_CENTER:
+        paddle_hit_point = paddle_frect.pos[1]
+    elif prediction > chaser.ai.TABLE_CENTER:
+        paddle_hit_point = paddle_frect.pos[1] + paddle_frect.size[1]
+    else:
+        paddle_hit_point = paddle_frect.pos[1] + paddle_frect.size[1] / 2
+    
+
+    if paddle_hit_point < prediction:
      return 'down'
-    elif paddle_frect.pos[1] + paddle_frect.size[1] / 2 > prediction: 
+    elif paddle_hit_point > prediction: 
      return 'up'
     else:
      return 'nothing'
@@ -46,6 +54,7 @@ class PongAI:
     self.ball_old_vel = (0,0)
     self.ball_old_dist = abs(paddle.pos[0] - self.ball_old_pos[0])
     self.ball_towards = None
+    self.TABLE_CENTER = table_size[1] / 2
 
   def get_vel(self, ball):
     ''' Returns the current velocity tuple of the ball'''
