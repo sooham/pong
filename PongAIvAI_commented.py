@@ -127,14 +127,15 @@ class Paddle:
         # the direction variable takes in the result from the chaser_ai.chaser function.
         # can be "up" or "down"
 
-        direction = self.move_getter(self.frect.copy(), enemy_frect.copy(), ball_frect.copy(), tuple(table_size))
+        #direction = self.move_getter(self.frect.copy(), enemy_frect.copy(), ball_frect.copy(), tuple(table_size))
 
         '''
         UNCOMMENT TO GET INPUTS FROM OUR AI
         The line below checks our function for an output in time 100 ms and
         returns None if no movement found.
         '''
-        direction = timeout(self.move_getter, (self.frect.copy(), enemy_frect.copy(), ball_frect.copy(), tuple(table_size)), {}, self.timeout)
+
+        direction = self.move_getter(self.frect.copy(), enemy_frect.copy(), ball_frect.copy(), tuple(table_size))# timeout(self.move_getter, (self.frect.copy(), enemy_frect.copy(), ball_frect.copy(), tuple(table_size)), {}, self.timeout)
         if direction == None:
             print('too slow')
 
@@ -512,8 +513,8 @@ def init_game():
 
     # move_getter are additional instance attributes added, these simply represent
     # the AI functions providing input through "up" or "down"
-    paddles[0].move_getter = chaser_ai.chaser 
-    paddles[1].move_getter = prototype_ai.chaser
+    paddles[0].move_getter = chaser_ai.chaser
+    paddles[1].move_getter = prototype_ai.chaser 
     
     game_loop(screen, paddles, ball, table_size, clock_rate, turn_wait_rate, score_to_win, 1)
     screen.blit(pygame.font.Font(None, 32).render(str('SWITCHING SIDES'), True, white), [int(0.6*table_size[0])-8, 0])
