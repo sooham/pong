@@ -1,17 +1,13 @@
+set_up = False
 
 def reflect(a ,b):
   if a < 0:
     a = -a
-
   fdiv, rem = divmod(a, b)
   if fdiv % 2 == 0:
     return rem
   else:
     return b - rem
-
-
-
-set_up = False
 
 def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
     global set_up
@@ -25,8 +21,8 @@ def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
       return 'nothing'
 
     if chaser.ai.ball_towards:
-      intercept = (ball_frect.pos[1] + vel[1] * ((paddle_frect.pos[0] - ball_frect.pos[0]) / vel[0]))
-      prediction = reflect(intercept, table_size[1])  
+        intercept = (ball_frect.pos[1] + vel[1] * ((paddle_frect.pos[0] - ball_frect.pos[0]) / vel[0]))
+        prediction = reflect(intercept, table_size[1])  
     else:
         prediction = chaser.ai.TABLE_CENTER
 
@@ -38,7 +34,6 @@ def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
         paddle_hit_point = (paddle_frect.pos[1] + 7 * paddle_frect.size[1] / 8) 
     else:
         paddle_hit_point = paddle_frect.pos[1] + paddle_frect.size[1] / 2
-    print(paddle_hit_point - prediction)
     
 
     if paddle_hit_point < prediction:
