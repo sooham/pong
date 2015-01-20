@@ -52,7 +52,11 @@ def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
       beta = max(.5, beta)
 
       paddle_hit_point = (paddle_frect.size[1] * beta / 2) - (paddle_frect.size[1] / 2) + prediction + (ball_frect.size[1] / 2)
-      paddle_hit_point = paddle_hit_point % paddle_frect.size[1]
+      fdiv, rem = divmod(paddle_hit_point, paddle_frect.size[1])
+      if fdiv % 2 == 0:
+        paddle_hit_point = rem
+      else:
+        paddle_hit_point = paddle_frect.size[1] - rem
     else:
       paddle_hit_point = paddle_frect.size[1] / 2
 
