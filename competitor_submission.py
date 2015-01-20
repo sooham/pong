@@ -5,34 +5,6 @@ ai = None
 
 
 def pong_ai(paddle_frect, other_paddle_frect, ball_frect, table_size):
-    """
-    return "up" or "down", depending on which way the paddle should go to
-    align its centre with the centre of the ball, assuming the ball will
-    not be moving
-
-    Arguments:
-    paddle_frect: a rectangle representing the coordinates of the paddle
-                  paddle_frect.pos[0], paddle_frect.pos[1] is the top-left
-                  corner of the rectangle.
-                  paddle_frect.size[0], paddle_frect.size[1] are the dimensions
-                  of the paddle along the x and y axis, respectively
-
-    other_paddle_frect:
-                  a rectangle representing the opponent paddle. It is formatted
-                  in the same way as paddle_frect
-    ball_frect:   a rectangle representing the ball. It is formatted in the
-                  same way as paddle_frect
-    table_size:   table_size[0], table_size[1] are the dimensions of the table,
-                  along the x and the y axis respectively
-
-    The coordinates look as follows:
-0             x
-     |------------->
-     |
-     |
-     |
- y   v
-    """
     global first_move, ai
 
     if first_move:
@@ -51,12 +23,6 @@ class SncAI(object):
     history_weights = [1 / i for i in range(1, 21)]
 
     def __init__(self, paddle_frect, their_paddle_frect, ball_frect, table_size):
-        """
-        Initialize the AI by telling it the following:
-        - Initialize the size of the table
-        - determine whether we are on the left or right and assign this to move_getter.is_left_paddle
-        - assign the variables "my_edge" and "their_edge" to be the x coordinates of the edges.
-        """
 
         self.table_width = table_size[0]
         self.table_height = table_size[1]
@@ -147,30 +113,14 @@ class SncAI(object):
 
 
     def get_centre(self, frect):
-        '''
-        Helper function that returns the y-coordinate of the centre of an frect.
-        '''
         return frect.pos[1] + 0.5*frect.size[1]
 
     def get_vel(self, current_pos):
-        """
-        Helper function that returns the change in position of the ball per tick as a 2-tuple.
-
-        previous_pos - x, y tuple
-        current_pos - x, y tuple
-        """
         return (current_pos[0] - self.previous_ball_pos[0],
                 current_pos[1] - self.previous_ball_pos[1])
 
 
     def get_projected_vel(self, collision_y, trajectory_position):
-        """
-        Return the projected velocity (as a 2-tuple) of the ball after colliding with the paddle
-
-        Parameters:
-        collision_y - the y-coordinate of the collision
-
-        """
         projected_theta = self.get_angle(collision_y, self.paddle_frect.size[1],
                                          trajectory_position + 0.5 * self.ball_frect.size[1])
         projected_vel = [math.cos(projected_theta) * self.ball_vel[0] -
@@ -189,11 +139,6 @@ class SncAI(object):
 
 
     def get_angle(self, paddle_y, paddle_height, ball_y):
-        """
-        Given the position of the paddle and the ball, gets the angle that
-        the ball will rebound off of the paddle at.
-        Copied from Guerzhoy
-        """
         center = paddle_y + paddle_height / 2  # centre of paddle with respect to y
         rel_dist_from_c = ((ball_y - center) / paddle_height)  # distance from ball to centre
         rel_dist_from_c = min(0.5, rel_dist_from_c)
@@ -203,36 +148,17 @@ class SncAI(object):
         return sign * rel_dist_from_c * SncAI.MAX_ANGLE * math.pi / 180
 
     def out_of_reach(self, trajectory):
-        """
-        Return whether or not the paddle can potentially reach the ball on its trajectory
-        (whose?)
-
-        Parameters:
-        trajectory - a dictionary with keys 'position', 'walls' and 'time', typically a result of get_ball_trajectory
-        is_me - a boolean indicating whether we are considering our paddle.
-        """
         distance_to_ball = abs(self.their_paddle_frect.pos[1] + self.their_paddle_frect.size[1] * 0.5 - trajectory['position'])
         return (distance_to_ball - trajectory['time']) > self.their_paddle_frect.size[1] * 0.5 + 20 * trajectory[
                 'walls'] + 8
 
 
     def most_likely_return_position(self):
-        """
-        Returns where the ball is most likely to be returned to
-        Currently returns the average position of the opponent's return hits weighted by the number of turns since then.
-        """
         return (sum(i * j for i, j in zip(self.previous_opponent_target, SncAI.history_weights)) /
                 sum(SncAI.history_weights[:len(self.previous_opponent_target)]))  # normalize sum to 1.
 
 
     def get_ball_trajectory(self, ball_vel, ball_pos, paddle_edge, time=0, walls=0):
-        """
-        Return the y coordinate that the ball will hit when it reaches the edge
-        that it's moving towards
-
-        :return: a dictionary with keys position, time and walls. Position is the y position along the edge, time is
-        the number of ticks until you hit the edge and walls is the number of walls you've hit.
-        """
         ball_vel = list(ball_vel)  # Copying ball_vel deliberately so I don't mess stuff up.
         if ball_vel[0] == 0:
             ball_vel[0] = 1
@@ -261,9 +187,6 @@ class SncAI(object):
             return {'position': projected_y, 'time': time_to_edge + time, 'walls': walls}
 
     def get_possible_positions(self, trajectory):
-        """
-        Return the possible y positions that could potentially hit the ball
-        """
         possibilities = []
         min_possibility = max(0, int(trajectory['position'] - self.paddle_frect.size[1]))
         max_possibility = int(min(self.table_height - self.paddle_frect.size[1], trajectory['position']))
@@ -273,9 +196,6 @@ class SncAI(object):
         return possibilities
 
     def get_optimal_target(self, projected_trajectory):
-        """
-        Return the best point along the paddle with which to hit the ball
-        """
         best_position = self.paddle_frect.pos[1] + self.paddle_frect.size[1] / 2
         best_score = -10000
         for possibility in self.get_possible_positions(projected_trajectory):
