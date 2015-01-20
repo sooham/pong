@@ -29,10 +29,6 @@ def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
           else:
             chaser.ai.mean_intersect = (intercept + chaser.ai.n * chaser.ai.mean_intersect) / (chaser.ai.n + 1) 
           chaser.ai.n += 1
-          print("Updating:\n")
-          print(chaser.ai.mean_intersect)
-          print("N: ")
-          print(chaser.ai.n)
           chaser.ai.mean_change = False
     else:
         if not chaser.ai.mean_change:
