@@ -1,11 +1,12 @@
 """
 Credits to Michael Guzerhoy work in PongAIvAI.py for lines 41 - 56 of
 the code below.
-""" 
+"""
 import math
 
 ai_set_up = False
 ai = None
+
 
 def wrap(a, b):
     """ Wraps the distance a around the distance b and returns the recess."""
