@@ -5,3 +5,5 @@ Made by Juan Camilo Osorio and Sooham Rafiz.
 This code can be used under the terms of the creative commons
 CC 1.0 Universal license, hence this code and its derivatives cannot be used
 without reference to the original authors.
+
+Thank you U of T professor Michael Guerzhoy for hosting the competition.
