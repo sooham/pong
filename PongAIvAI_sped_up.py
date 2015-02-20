@@ -373,7 +373,7 @@ def init_game():
     ball = Ball(table_size, ball_size, paddle_bounce, wall_bounce, dust_error, init_speed_mag)
 
     import prototype_ai
-    import current_ai
+    import BallNet
     paddles[0].move_getter = prototype_ai.chaser
     paddles[1].move_getter = current_ai.pong_ai
     

@@ -1,5 +1,5 @@
 """
-Team name: 
+Team name: BallNet
 Team members: Sooham Rafiz, Juan Camilo Osorio
 Student Numbers: 1001250683, 
 Credits to Michael Guzerhoy work in PongAIvAI.py for lines 43 - 59 of
