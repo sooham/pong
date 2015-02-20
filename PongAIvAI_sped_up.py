@@ -375,7 +375,7 @@ def init_game():
     import prototype_ai
     import BallNet
     paddles[0].move_getter = prototype_ai.chaser
-    paddles[1].move_getter = current_ai.pong_ai
+    paddles[1].move_getter = BallNet.pong_ai
     
     game_loop(screen, paddles, ball, table_size, clock_rate, turn_wait_rate, score_to_win, 1)
     screen.blit(pygame.font.Font(None, 32).render(str('SWITCHING SIDES'), True, white), [int(0.6*table_size[0])-8, 0])
