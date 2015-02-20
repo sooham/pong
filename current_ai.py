@@ -1,8 +1,8 @@
 """
-Team name:
+Team name: 
 Team members: Sooham Rafiz, Juan Camilo Osorio
 Student Numbers: 1001250683, 
-Credits to Michael Guzerhoy work in PongAIvAI.py for lines 41 - 56 of
+Credits to Michael Guzerhoy work in PongAIvAI.py for lines 43 - 59 of
 the code below.
 """
 import math
@@ -24,8 +24,9 @@ def pong_ai(paddle, enemy, ball, table_size):
     if not ai_set_up:
         ai = AI(paddle, table_size)
         ai_set_up = True
+
     v = ai.velocity(ball)
-    # if ball not moving
+    # if ball not moving horizontally
     if v[0] == 0:
         return 'nothing'
 
@@ -81,7 +82,7 @@ def pong_ai(paddle, enemy, ball, table_size):
 
 
 class AI(object):
-    """ Represents the  artifically intelligent pong player"""
+    """ Represents the artifically intelligent pong player"""
 
     def __init__(self, paddle, table_size):
         self.ball_old_pos = (table_size[0] / 2, table_size[1] / 2)
