@@ -1,5 +1,7 @@
 # BallNet - The Intelligent Pong player
 
+### (3rd place winner)[http://www.cs.toronto.edu/~guerzhoy/pong2015/] for the U of T wide PongAI competition!
+
 ##Made by Juan Camilo Osorio and Sooham Rafiz. 
 
 Our submission for the Pong Artificial Intelligence competition
